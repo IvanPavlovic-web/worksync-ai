@@ -18,7 +18,7 @@ The repository is designed for local-first operation:
 
 ### Windows
 
-Install Docker Desktop, Python 3.12+ and Node.js 20+.
+Install Docker Desktop, Python 3.12 and Node.js 20+.
 
 ~~~powershell
 git clone https://github.com/IvanPavlovic-web/worksync-ai.git
@@ -29,7 +29,7 @@ cd worksync-ai
 
 ### Linux/macOS
 
-Install Docker, Python 3.12+ and Node.js 20+.
+Install Docker, Python 3.12 and Node.js 20+.
 
 ~~~bash
 git clone https://github.com/IvanPavlovic-web/worksync-ai.git

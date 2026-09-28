@@ -1,8 +1,17 @@
 import re
 from datetime import datetime
+from functools import lru_cache
 
 SKILLS = r"python|javascript|typescript|java|c#|php|go|rust|sql|react|vue|angular|django|fastapi|node(?:\.js)?|docker|kubernetes|aws|azure|figma|excel|photoshop"
 LANGUAGES = {"bosnian": "bs", "bosanski": "bs", "croatian": "hr", "hrvatski": "hr", "serbian": "sr", "srpski": "sr", "english": "en", "engleski": "en", "german": "de", "njemački": "de", "njemacki": "de"}
+
+@lru_cache(maxsize=1)
+def _ner_model():
+    try:
+        import spacy
+        return spacy.load("xx_ent_wiki_sm")
+    except (ImportError, OSError):
+        return None
 
 def parse_cv_text(text: str) -> dict:
     clean = re.sub(r"\s+", " ", text).strip()
@@ -12,7 +21,11 @@ def parse_cv_text(text: str) -> dict:
     seniority = "junior" if experience < 2 else "mid" if experience < 5 else "senior" if experience < 8 else "lead"
     email = re.search(r"[\w.+-]+@[\w-]+\.[\w.-]+", clean)
     languages = [{"code": code, "level": "B2"} for name, code in LANGUAGES.items() if name in clean.lower()]
-    return {"primary_role": _role(clean), "years_experience": experience, "seniority": seniority, "top_skills": found, "soft_skills": [], "languages": languages, "preferred_timezone": None, "summary": clean[:500], "experiences": [], "skills": [{"name": s, "category": "Other", "level": seniority.title(), "years": None} for s in found], "education": [], "certifications": [], "preferred_locations": [], "willing_to_relocate": bool(re.search(r"relocat|selidb", clean, re.I)), "requires_visa_sponsorship": bool(re.search(r"visa|viza|sponsor", clean, re.I)), "email": email.group(0) if email else None, "_detected_language": "bs"}
+    entities = []
+    ner = _ner_model()
+    if ner:
+        entities = [{"text": ent.text, "label": ent.label_} for ent in ner(clean[:25000]).ents]
+    return {"primary_role": _role(clean), "years_experience": experience, "seniority": seniority, "top_skills": found, "soft_skills": [], "languages": languages, "preferred_timezone": None, "summary": clean[:500], "experiences": [], "skills": [{"name": s, "category": "Other", "level": seniority.title(), "years": None} for s in found], "education": [], "certifications": [], "preferred_locations": [], "willing_to_relocate": bool(re.search(r"relocat|selidb", clean, re.I)), "requires_visa_sponsorship": bool(re.search(r"visa|viza|sponsor", clean, re.I)), "email": email.group(0) if email else None, "entities": entities, "_detected_language": "bs"}
 
 def _role(text: str) -> str | None:
     match = re.search(r"(?:position|role|pozicija|titula)\s*[:\-]?\s*([^|,;]{3,80})", text, re.I)
