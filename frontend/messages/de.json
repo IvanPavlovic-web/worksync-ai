@@ -1,0 +1,39 @@
+{
+  "common": {
+    "search": "Jobs suchen",
+    "location": "Standort",
+    "apply": "Bewerben",
+    "save": "Speichern",
+    "remote": "Remote",
+    "hybrid": "Hybrid",
+    "onsite": "Vor Ort",
+    "loading": "Laden...",
+    "back": "Zurück"
+  },
+  "home": {
+    "heroTitle": "Finde einen Job in Deutschland, der Region oder remote",
+    "heroSubtitle": "KI-Matching für Deutschland und den Balkan — 30+ Quellen",
+    "searchCta": "Jobs suchen",
+    "latestJobs": "Neueste Jobs",
+    "remoteJobs": "Remote-Jobs",
+    "germanyJobs": "Jobs in Deutschland",
+    "whyUs": "Warum WorkSync?"
+  },
+  "job": {
+    "salary": "Gehalt",
+    "posted": "Veröffentlicht",
+    "company": "Unternehmen",
+    "visaSponsorship": "Visa-Sponsoring",
+    "housing": "Unterkunft gestellt",
+    "easyApply": "Einfach bewerben",
+    "applyNow": "Direkt bewerben",
+    "similar": "Ähnliche Jobs"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "fullName": "Vollständiger Name"
+  }
+}

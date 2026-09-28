@@ -1,0 +1,39 @@
+{
+  "common": {
+    "search": "Search jobs",
+    "location": "Location",
+    "apply": "Apply",
+    "save": "Save",
+    "remote": "Remote",
+    "hybrid": "Hybrid",
+    "onsite": "On-site",
+    "loading": "Loading...",
+    "back": "Back"
+  },
+  "home": {
+    "heroTitle": "Find a job in Bosnia, region, or remote",
+    "heroSubtitle": "AI matching for Bosnia and the Balkans — 30+ sources",
+    "searchCta": "Search jobs",
+    "latestJobs": "Latest jobs",
+    "remoteJobs": "Remote jobs",
+    "germanyJobs": "Jobs in Germany",
+    "whyUs": "Why WorkSync?"
+  },
+  "job": {
+    "salary": "Salary",
+    "posted": "Posted",
+    "company": "Company",
+    "visaSponsorship": "Visa sponsored",
+    "housing": "Housing provided",
+    "easyApply": "Easy Apply",
+    "applyNow": "Apply directly",
+    "similar": "Similar jobs"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name"
+  }
+}

@@ -1,0 +1,13 @@
+worksync.ba {
+    encode gzip zstd
+    reverse_proxy web:3000
+}
+
+api.worksync.ba {
+    encode gzip zstd
+    reverse_proxy api:8000
+}
+
+www.worksync.ba {
+    redir https://worksync.ba{uri} permanent
+}

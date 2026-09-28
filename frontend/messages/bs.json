@@ -1,0 +1,39 @@
+{
+  "common": {
+    "search": "Pretraži poslove",
+    "location": "Lokacija",
+    "apply": "Prijavi se",
+    "save": "Sačuvaj",
+    "remote": "Remote",
+    "hybrid": "Hibridno",
+    "onsite": "U kancelariji",
+    "loading": "Učitavanje...",
+    "back": "Nazad"
+  },
+  "home": {
+    "heroTitle": "Nađi posao u BiH, regionu ili remote",
+    "heroSubtitle": "AI matching za BiH i Balkan — poslovi iz 30+ izvora",
+    "searchCta": "Pretraži poslove",
+    "latestJobs": "Najnoviji poslovi",
+    "remoteJobs": "Remote poslovi",
+    "germanyJobs": "Posao u Njemačkoj",
+    "whyUs": "Zašto WorkSync?"
+  },
+  "job": {
+    "salary": "Plata",
+    "posted": "Objavljeno",
+    "company": "Firma",
+    "visaSponsorship": "Viza osigurana",
+    "housing": "Smještaj osiguran",
+    "easyApply": "Automatska prijava",
+    "applyNow": "Prijavi se direktno",
+    "similar": "Slični poslovi"
+  },
+  "auth": {
+    "login": "Prijava",
+    "register": "Registracija",
+    "email": "Email",
+    "password": "Lozinka",
+    "fullName": "Ime i prezime"
+  }
+}

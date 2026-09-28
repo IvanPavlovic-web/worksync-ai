@@ -1,0 +1,39 @@
+{
+  "common": {
+    "search": "Претражи послове",
+    "location": "Локација",
+    "apply": "Пријави се",
+    "save": "Сачувај",
+    "remote": "Remote",
+    "hybrid": "Хибридно",
+    "onsite": "У канцеларији",
+    "loading": "Учитавање...",
+    "back": "Назад"
+  },
+  "home": {
+    "heroTitle": "Нађи посао у Србији, региону или remote",
+    "heroSubtitle": "AI matching за Србију и Балкан — послови из 30+ извора",
+    "searchCta": "Претражи послове",
+    "latestJobs": "Најновији послови",
+    "remoteJobs": "Remote послови",
+    "germanyJobs": "Посао у Немачкој",
+    "whyUs": "Зашто WorkSync?"
+  },
+  "job": {
+    "salary": "Плата",
+    "posted": "Објављено",
+    "company": "Фирма",
+    "visaSponsorship": "Виза обезбеђена",
+    "housing": "Смештај обезбеђен",
+    "easyApply": "Аутоматска пријава",
+    "applyNow": "Пријави се директно",
+    "similar": "Слични послови"
+  },
+  "auth": {
+    "login": "Пријава",
+    "register": "Регистрација",
+    "email": "Email",
+    "password": "Лозинка",
+    "fullName": "Име и презиме"
+  }
+}

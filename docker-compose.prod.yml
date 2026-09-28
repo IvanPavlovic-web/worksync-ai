@@ -1,0 +1,114 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: worksync_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+    networks: [worksync]
+
+  redis:
+    image: redis:7-alpine
+    container_name: worksync_redis
+    restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - redisdata:/data
+    networks: [worksync]
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.10
+    container_name: worksync_search
+    restart: always
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_KEY}
+      MEILI_ENV: production
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilidata:/meili_data
+    networks: [worksync]
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: worksync_api
+    restart: always
+    env_file: ./backend/.env.prod
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks: [worksync]
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    container_name: worksync_worker
+    restart: always
+    env_file: ./backend/.env.prod
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./backend/screenshots:/app/screenshots
+      - ./backend/.pw_profiles:/app/.pw_profiles
+    networks: [worksync]
+
+  beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.beat
+    container_name: worksync_beat
+    restart: always
+    env_file: ./backend/.env.prod
+    depends_on:
+      - redis
+    networks: [worksync]
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: worksync_web
+    restart: always
+    env_file: ./frontend/.env.prod
+    depends_on:
+      - api
+    networks: [worksync]
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: worksync_caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+      - web
+    networks: [worksync]
+
+volumes:
+  pgdata:
+  redisdata:
+  meilidata:
+  caddy_data:
+  caddy_config:
+
+networks:
+  worksync:
+    driver: bridge
