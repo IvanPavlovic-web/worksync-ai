@@ -4,6 +4,7 @@ python -m venv .venv
 & .\.venv\Scripts\python.exe -m pip install -r backend\requirements.txt
 & .\.venv\Scripts\python.exe -m playwright install chromium
 if (-not (Test-Path backend\.env)) { Copy-Item backend\.env.example backend\.env }
+if (-not (Test-Path frontend\.env.local)) { Copy-Item frontend\.env.example frontend\.env.local }
 docker compose up -d postgres redis meilisearch
 Push-Location frontend; npm ci; Pop-Location
 

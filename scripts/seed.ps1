@@ -1,3 +1,3 @@
 $env:PYTHONPATH = "backend"
-& .\.venv\Scripts\python.exe -c "from app.database import Base, engine; Base.metadata.create_all(engine); print('Database schema ready')"
+& .\.venv\Scripts\python.exe -c "from app.database import init_db; init_db(); print('Database schema ready')"
 

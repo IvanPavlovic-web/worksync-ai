@@ -8,6 +8,7 @@ python3 -m venv .venv
 python -m pip install -r backend/requirements.txt
 python -m playwright install chromium
 test -f backend/.env || cp backend/.env.example backend/.env
+test -f frontend/.env.local || cp frontend/.env.example frontend/.env.local
 docker compose up -d postgres redis meilisearch
 (cd frontend && npm ci)
 

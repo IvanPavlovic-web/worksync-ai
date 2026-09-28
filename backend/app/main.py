@@ -9,8 +9,7 @@ from app.api import (
     ai, applications, auth, blog, jobs, profile, public, search,
 )
 from app.config import settings
-from app.database import Base, engine
-from app import models  # noqa: F401
+from app.database import init_db
 
 
 limiter = Limiter(key_func=get_remote_address)
@@ -46,4 +45,4 @@ def health():
 
 @app.on_event("startup")
 def create_tables():
-    Base.metadata.create_all(bind=engine)
+    init_db()

@@ -21,3 +21,9 @@ def get_db() -> Generator[Session, None, None]:
         yield db
     finally:
         db.close()
+
+
+def init_db() -> None:
+    """Import models before creating tables so metadata is fully populated."""
+    from app import models  # noqa: F401
+    Base.metadata.create_all(bind=engine)

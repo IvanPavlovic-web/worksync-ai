@@ -1,4 +1,5 @@
-﻿import { notFound } from "next/navigation";
+import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { serverFetch } from "@/lib/api";
 
@@ -109,9 +110,9 @@ export default async function BlogPostPage({
       <div className="mt-12 pt-8 border-t border-slate-800">
         <p className="text-slate-400 text-sm">
           TraÅ¾iÅ¡ posao?{" "}
-          <a href="/poslovi" className="text-indigo-400 hover:underline">
+          <Link href="/poslovi" className="text-indigo-400 hover:underline">
             Pogledaj {">"}500 aktivnih oglasa
-          </a>{" "}
+          </Link>{" "}
           na WorkSync-u.
         </p>
       </div>
