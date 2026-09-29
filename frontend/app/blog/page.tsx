@@ -1,14 +1,14 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { serverFetch } from "@/lib/api";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Blog â€” vodiÄi za posao u BiH i inostranstvu",
+  title: "Blog — vodiči za posao u BiH i inostranstvu",
   description:
-    "PraktiÄni vodiÄi: radna dozvola NjemaÄka, CV, intervjui, plate, " +
-    "remote poslovi i relokacija. Sve Å¡to trebaÅ¡ znati kao kandidat iz BiH.",
+    "Praktični vodiči: radna dozvola Njemačka, CV, intervjui, plate, " +
+    "remote poslovi i relokacija. Sve što trebaš znati kao kandidat iz BiH.",
   alternates: { canonical: "/blog" },
 };
 
@@ -30,9 +30,9 @@ export default async function BlogIndex() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold mb-3">VodiÄi za karijeru</h1>
+      <h1 className="text-4xl font-bold mb-3">Vodiči za karijeru</h1>
       <p className="text-slate-400 mb-10">
-        Sve o poslu u BiH, regionu i inostranstvu â€” od CV-a do radne dozvole.
+        Sve o poslu u BiH, regionu i inostranstvu — od CV-a do radne dozvole.
       </p>
 
       <div className="space-y-8">
@@ -53,7 +53,7 @@ export default async function BlogIndex() {
                 month: "long",
                 day: "numeric",
               })}{" "}
-              Â· {p.category}
+              · {p.category}
             </p>
           </article>
         ))}
@@ -61,7 +61,7 @@ export default async function BlogIndex() {
 
       {(!data || data.items.length === 0) && (
         <p className="text-slate-400">
-          Blog postovi se generiÅ¡u. Provjeri za par sati.
+          Blog postovi se generišu. Provjeri za par sati.
         </p>
       )}
     </div>

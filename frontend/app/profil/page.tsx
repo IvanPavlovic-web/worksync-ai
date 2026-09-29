@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api";
@@ -52,7 +52,7 @@ function ProfileInner() {
         const r = await api.get("/profile");
         setData(r.data);
       } catch {
-        setMsg("GreÅ¡ka pri uÄitavanju profila");
+        setMsg("Greška pri učitavanju profila");
       }
     })();
   }, []);
@@ -67,12 +67,12 @@ function ProfileInner() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMsg(
-        `âœ… CV parsiran! Jezik: ${res.detected_language}, pozicija: ${res.primary_role}, vjeÅ¡tina: ${res.skills_count}`,
+        `CV parsiran! Jezik: ${res.detected_language}, pozicija: ${res.primary_role}, vještina: ${res.skills_count}`,
       );
       const r = await api.get("/profile");
       setData(r.data);
     } catch (err: any) {
-      setMsg("âŒ " + (err?.response?.data?.detail || "GreÅ¡ka pri upload-u"));
+      setMsg((err?.response?.data?.detail || "Greška pri upload-u"));
     } finally {
       setBusy(false);
     }
@@ -84,9 +84,9 @@ function ProfileInner() {
     setBusy(true);
     try {
       await api.put("/profile/vault", data.vault);
-      setMsg("âœ… Vault saÄuvan");
+      setMsg("Vault sačuvan");
     } catch {
-      setMsg("âŒ GreÅ¡ka pri Äuvanju");
+      setMsg("Greška pri čuvanju");
     } finally {
       setBusy(false);
     }
@@ -95,7 +95,7 @@ function ProfileInner() {
   if (!data) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12 text-slate-400">
-        UÄitavanje...
+        Učitavanje...
       </div>
     );
   }
@@ -111,9 +111,9 @@ function ProfileInner() {
       )}
 
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-        <h2 className="text-xl font-semibold mb-3">ðŸ“„ CV Import</h2>
+        <h2 className="text-xl font-semibold mb-3">📄 CV Import</h2>
         <p className="text-slate-400 text-sm mb-4">
-          Upload-uj CV (PDF / DOCX / TXT) â€” AI Ä‡e ga parsirati i popuniti
+          Upload-uj CV (PDF / DOCX / TXT) — AI će ga parsirati i popuniti
           profil.
         </p>
         <input
@@ -133,7 +133,7 @@ function ProfileInner() {
       </section>
 
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
-        <h2 className="text-xl font-semibold mb-4">ðŸ‘¤ Osnovni podaci</h2>
+        <h2 className="text-xl font-semibold mb-4">👤 Osnovni podaci</h2>
         <form
           onSubmit={saveVault}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -174,7 +174,7 @@ function ProfileInner() {
             }
           />
           <Field
-            label="DrÅ¾ava (kod npr. BA)"
+            label="Država (kod npr. BA)"
             value={data.vault.country_code}
             onChange={(v) =>
               setData({
@@ -246,7 +246,7 @@ function ProfileInner() {
               disabled={busy}
               className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 px-4 py-2 rounded-lg"
             >
-              SaÄuvaj vault
+              Sačuvaj vault
             </button>
           </div>
         </form>
@@ -254,7 +254,7 @@ function ProfileInner() {
 
       <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
         <h2 className="text-xl font-semibold mb-4">
-          ðŸ’¼ Iskustvo i vjeÅ¡tine (iz CV-a)
+          💼 Iskustvo i vještine (iz CV-a)
         </h2>
 
         {data.profile.title && (
@@ -268,14 +268,14 @@ function ProfileInner() {
 
         {data.profile.skills?.length > 0 && (
           <div className="mt-4">
-            <h3 className="text-sm uppercase text-slate-500 mb-2">VjeÅ¡tine</h3>
+            <h3 className="text-sm uppercase text-slate-500 mb-2">Vještine</h3>
             <div className="flex flex-wrap gap-2">
               {data.profile.skills.map((s, i) => (
                 <span
                   key={i}
                   className="bg-slate-800 px-2 py-1 rounded text-xs"
                 >
-                  {s.name} {s.level && `Â· ${s.level}`}
+                  {s.name} {s.level && `· ${s.level}`}
                 </span>
               ))}
             </div>

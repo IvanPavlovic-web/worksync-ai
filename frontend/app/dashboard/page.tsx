@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -66,7 +66,7 @@ function DashboardInner() {
           clearAuth();
           router.push("/login");
         } else {
-          setError("GreÅ¡ka pri dohvatu preporuka.");
+          setError("Greška pri dohvatu preporuka.");
         }
       } finally {
         setLoading(false);
@@ -80,13 +80,13 @@ function DashboardInner() {
       status: "saved",
       match_score: job.score_pct,
     });
-    alert("SaÄuvano!");
+    alert("Sačuvano!");
   }
 
   async function autoApply(job: FeedJob) {
     const res = await api.post(`/applications/auto-apply/${job.id}`);
     if (res.data.queued) alert("Prijava ide u red. Otvori /kanban za status.");
-    else alert("Rate limit â€” probaj kasnije.");
+    else alert("Rate limit — probaj kasnije.");
   }
 
   async function generateCoverLetter(job: FeedJob) {
@@ -100,10 +100,10 @@ function DashboardInner() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">
-            Zdravo, {user?.full_name || user?.email || "kandidate"} ðŸ‘‹
+            Zdravo, {user?.full_name || user?.email || "kandidate"} 👋
           </h1>
           <p className="text-slate-400 mt-1">
-            Tvoje AI preporuke â€” sortirano po match-u.
+            Tvoje AI preporuke — sortirano po match-u.
           </p>
         </div>
         <Link
@@ -116,7 +116,7 @@ function DashboardInner() {
 
       {reason === "profile_not_ready" && (
         <div className="bg-yellow-950/40 border border-yellow-900 text-yellow-200 p-4 rounded-lg mb-6">
-          âš ï¸ Tvoj profil joÅ¡ nije kompletan.{" "}
+          Tvoj profil još nije kompletan.{" "}
           <Link href="/profil" className="underline">
             Upload-uj CV
           </Link>{" "}
@@ -131,7 +131,7 @@ function DashboardInner() {
       )}
 
       {loading ? (
-        <p className="text-slate-400">UÄitavanje preporuka...</p>
+        <p className="text-slate-400">Učitavanje preporuka...</p>
       ) : jobs.length === 0 ? (
         <p className="text-slate-400">
           Nema preporuka. Upload-uj CV u profilu.
@@ -158,16 +158,16 @@ function DashboardInner() {
                     </span>
                   </div>
                   <p className="text-slate-400 text-sm mt-1">
-                    {j.company} Â· {j.location}
+                    {j.company} · {j.location}
                   </p>
                   {j.salary_max && (
                     <p className="text-emerald-400 text-sm mt-1">
-                      {j.salary_min}â€“{j.salary_max} {j.currency}
+                      {j.salary_min}–{j.salary_max} {j.currency}
                     </p>
                   )}
                   {j.eligibility?.notes?.length > 0 && (
                     <p className="text-yellow-400 text-xs mt-1">
-                      âš ï¸ {j.eligibility.notes.join(" Â· ")}
+                      {j.eligibility.notes.join(" · ")}
                     </p>
                   )}
                 </div>
@@ -184,13 +184,13 @@ function DashboardInner() {
                     onClick={() => save(j)}
                     className="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded text-xs"
                   >
-                    SaÄuvaj
+                    Sačuvaj
                   </button>
                   <button
                     onClick={() => generateCoverLetter(j)}
                     className="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded text-xs"
                   >
-                    GeneriÅ¡i pismo
+                    Generiši pismo
                   </button>
                   <button
                     onClick={() => autoApply(j)}

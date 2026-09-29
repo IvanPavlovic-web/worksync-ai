@@ -1,13 +1,13 @@
-﻿"use client";
+"use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const LOCALES = [
-  { code: "bs", label: "ðŸ‡§ðŸ‡¦ Bosanski" },
-  { code: "hr", label: "ðŸ‡­ðŸ‡· Hrvatski" },
-  { code: "sr", label: "ðŸ‡·ðŸ‡¸ Srpski" },
-  { code: "en", label: "ðŸ‡¬ðŸ‡§ English" },
-  { code: "de", label: "ðŸ‡©ðŸ‡ª Deutsch" },
+  { code: "bs", label: "🇧🇦 Bosanski" },
+  { code: "hr", label: "🇭🇷 Hrvatski" },
+  { code: "sr", label: "🇷🇸 Srpski" },
+  { code: "en", label: "🇬🇧 English" },
+  { code: "de", label: "🇩🇪 Deutsch" },
 ];
 
 export function LocaleSwitcher() {

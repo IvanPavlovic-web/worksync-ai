@@ -27,7 +27,7 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const post = await getPost(params.slug);
-  if (!post) return { title: "Post nije naÄ‘en" };
+  if (!post) return { title: "Post nije nađen" };
   return {
     title: post.seo_title || post.title,
     description: post.seo_description || post.excerpt,
@@ -71,7 +71,7 @@ export default async function BlogPostPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "PoÄetna", item: "/" },
+      { "@type": "ListItem", position: 1, name: "Početna", item: "/" },
       { "@type": "ListItem", position: 2, name: "Blog", item: "/blog" },
       {
         "@type": "ListItem",
@@ -95,7 +95,7 @@ export default async function BlogPostPage({
 
       <header className="mb-8">
         <p className="text-sm text-slate-500 mb-2">
-          {new Date(post.published_at).toLocaleDateString("bs-BA")} Â·{" "}
+          {new Date(post.published_at).toLocaleDateString("bs-BA")} ·{" "}
           {post.category}
         </p>
         <h1 className="text-4xl font-bold leading-tight">{post.title}</h1>
@@ -109,7 +109,7 @@ export default async function BlogPostPage({
 
       <div className="mt-12 pt-8 border-t border-slate-800">
         <p className="text-slate-400 text-sm">
-          TraÅ¾iÅ¡ posao?{" "}
+          Tražiš posao?{" "}
           <Link href="/poslovi" className="text-indigo-400 hover:underline">
             Pogledaj {">"}500 aktivnih oglasa
           </Link>{" "}

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -46,7 +46,7 @@ export default function RegisterPage() {
       >
         <h1 className="text-2xl font-bold text-white">Registracija</h1>
         <p className="text-slate-400 text-sm">
-          Napravi nalog i pusti AI da naÄ‘e posao za tebe.
+          Napravi nalog i pusti AI da nađe posao za tebe.
         </p>
 
         <div>
@@ -58,7 +58,7 @@ export default function RegisterPage() {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
-            placeholder="Amina HodÅ¾iÄ‡"
+            placeholder="Amina Hodžić"
           />
         </div>
 
@@ -101,7 +101,7 @@ export default function RegisterPage() {
         </button>
 
         <p className="text-slate-400 text-sm text-center">
-          VeÄ‡ imaÅ¡ nalog?{" "}
+          Već imaš nalog?{" "}
           <Link href="/login" className="text-indigo-400 hover:underline">
             Prijavi se
           </Link>

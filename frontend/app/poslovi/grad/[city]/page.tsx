@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { serverFetch } from "@/lib/api";
@@ -11,9 +11,9 @@ const CITY_NAMES: Record<string, string> = {
   tuzla: "Tuzli",
   mostar: "Mostaru",
   zenica: "Zenici",
-  bihac: "BihaÄ‡u",
-  brcko: "BrÄkom",
-  gorazde: "GoraÅ¾du",
+  bihac: "Bihaću",
+  brcko: "Brčkom",
+  gorazde: "Goraždu",
 };
 
 export async function generateMetadata({
@@ -23,8 +23,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const name = CITY_NAMES[params.city] || params.city;
   return {
-    title: `Posao u ${name} â€” najnoviji oglasi`,
-    description: `Aktuelni poslovi u ${name}. IT, marketing, prodaja, ugostiteljstvo i drugo. AÅ¾urirano dnevno.`,
+    title: `Posao u ${name} — najnoviji oglasi`,
+    description: `Aktuelni poslovi u ${name}. IT, marketing, prodaja, ugostiteljstvo i drugo. Ažurirano dnevno.`,
     alternates: { canonical: `/poslovi/grad/${params.city}` },
   };
 }

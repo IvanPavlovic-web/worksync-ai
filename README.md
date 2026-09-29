@@ -267,7 +267,7 @@ Celery tasks include:
 Start worker and beat separately when needed:
 
 ~~~powershell
-celery -A app.workers.celery_app.celery worker -l info
+celery -A app.workers.celery_app.celery worker -l info --pool=solo  # Windows
 celery -A app.workers.celery_app.celery beat -l info
 ~~~
 

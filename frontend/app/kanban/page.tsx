@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -14,12 +14,12 @@ type Status =
   | "prefill";
 
 const COLUMNS: { key: Status; label: string; color: string }[] = [
-  { key: "saved", label: "ðŸ“Œ SaÄuvano", color: "border-slate-700" },
-  { key: "applied", label: "ðŸ“¤ Prijavljeno", color: "border-blue-700" },
-  { key: "prefill", label: "âš ï¸ Prefill", color: "border-yellow-700" },
-  { key: "interview", label: "ðŸ’¬ Intervju", color: "border-purple-700" },
-  { key: "offer", label: "ðŸŽ‰ Ponuda", color: "border-emerald-700" },
-  { key: "rejected", label: "âŒ Odbijeno", color: "border-red-900" },
+  { key: "saved", label: "Sačuvano", color: "border-slate-700" },
+  { key: "applied", label: "Prijavljeno", color: "border-blue-700" },
+  { key: "prefill", label: "Prefill", color: "border-yellow-700" },
+  { key: "interview", label: "Intervju", color: "border-purple-700" },
+  { key: "offer", label: "Ponuda", color: "border-emerald-700" },
+  { key: "rejected", label: "Odbijeno", color: "border-red-900" },
 ];
 
 interface App {
@@ -69,13 +69,13 @@ function KanbanInner() {
   }
 
   if (loading) {
-    return <div className="p-8 text-slate-400">UÄitavanje...</div>;
+    return <div className="p-8 text-slate-400">Učitavanje...</div>;
   }
 
   return (
     <div className="max-w-full px-4 py-8">
       <div className="flex items-center justify-between mb-6 max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold">PraÄ‡enje prijava</h1>
+        <h1 className="text-3xl font-bold">Praćenje prijava</h1>
         <p className="text-slate-400 text-sm">Ukupno: {apps.length}</p>
       </div>
 
@@ -125,7 +125,7 @@ function KanbanInner() {
                         onClick={() => remove(a.id)}
                         className="mt-1 text-red-400 hover:text-red-300 text-xs w-full text-left"
                       >
-                        ObriÅ¡i
+                        Obriši
                       </button>
                     </div>
                   ))}

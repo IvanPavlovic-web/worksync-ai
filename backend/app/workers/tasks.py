@@ -18,11 +18,12 @@ from app.workers.celery_app import celery
 
 # ---------- HELPERS ----------
 
-def _unique_slug(db: Session, title: str, company: str) -> str:
+def _unique_slug(db: Session, title: str, company: str, reserved: set[str] | None = None) -> str:
     base = slugify(f"{title}-{company or 'job'}")[:80]
     slug = base
     i = 1
-    while db.query(Job).filter_by(slug=slug).first():
+    reserved = reserved or set()
+    while slug in reserved or db.query(Job).filter_by(slug=slug).first():
         slug = f"{base}-{i}"
         i += 1
     return slug
@@ -30,6 +31,7 @@ def _unique_slug(db: Session, title: str, company: str) -> str:
 
 def _persist_jobs(db: Session, raws: list) -> int:
     added = 0
+    reserved_slugs: set[str] = set()
     for raw in raws:
         if not raw.url:
             continue
@@ -43,7 +45,8 @@ def _persist_jobs(db: Session, raws: list) -> int:
             duplicate.source_ids = list(set((duplicate.source_ids or []) + [raw.external_id]))
             continue
         fields = enrich_job(raw)
-        fields["slug"] = _unique_slug(db, raw.title, raw.company)
+        fields["slug"] = _unique_slug(db, raw.title, raw.company, reserved_slugs)
+        reserved_slugs.add(fields["slug"])
         fields["source_ids"] = [raw.external_id]
         try:
             job = Job(**fields)
@@ -51,7 +54,11 @@ def _persist_jobs(db: Session, raws: list) -> int:
             added += 1
         except Exception as e:
             print(f"[persist] failed {raw.url}: {e}")
-    db.commit()
+    try:
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
     return added
 
 
@@ -68,6 +75,7 @@ def scrape_tier(tier: str = "critical"):
                 added = _persist_jobs(db, raws)
                 stats[name] = {"fetched": len(raws), "added": added}
             except Exception as e:
+                db.rollback()
                 stats[name] = f"ERROR: {e}"
     finally:
         db.close()

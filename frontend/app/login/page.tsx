@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -36,7 +36,7 @@ export default function LoginPage() {
         className="bg-slate-900 border border-slate-800 rounded-2xl p-8 w-full max-w-md space-y-4"
       >
         <h1 className="text-2xl font-bold text-white">Prijava</h1>
-        <p className="text-slate-400 text-sm">DobrodoÅ¡ao nazad na WorkSync.</p>
+        <p className="text-slate-400 text-sm">Dobrodošao nazad na WorkSync.</p>
 
         <div>
           <label className="block text-sm text-slate-300 mb-1">Email</label>
@@ -58,7 +58,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-indigo-500"
-            placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+            placeholder="••••••••"
           />
         </div>
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
         </button>
 
         <p className="text-slate-400 text-sm text-center">
-          NemaÅ¡ nalog?{" "}
+          Nemaš nalog?{" "}
           <Link href="/register" className="text-indigo-400 hover:underline">
             Registruj se
           </Link>

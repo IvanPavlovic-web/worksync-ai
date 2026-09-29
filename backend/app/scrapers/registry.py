@@ -22,6 +22,13 @@ GREENHOUSE_BOARDS = [
     "stripe", "airbnb", "figma", "notion", "linear",
     "supabase", "retool", "brex", "gusto", "doordash", "instacart",
     "robinhood", "reddit", "discord", "dropbox", "coinbase",
+    # Additional public company career boards. Invalid or paused boards are
+    # skipped by the scraper, so one unavailable company cannot stop ingest.
+    "anthropic", "databricks", "cloudflare", "duolingo", "hubspot",
+    "asana", "plaid", "rippling", "scaleai", "clickup", "zapier",
+    "grammarly", "okta", "elastic", "hashicorp", "mongodb", "twilio",
+    "gitlab", "pinterest", "lyft", "ramp", "canva", "intercom",
+    "samsara", "brex", "lattice", "affirm", "faire",
 ]
 
 LEVER_BOARDS = [

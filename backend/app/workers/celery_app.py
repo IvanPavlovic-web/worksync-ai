@@ -1,5 +1,4 @@
 from celery import Celery
-import app.workers.blog_tasks  # noqa
 from app.config import settings
 
 
@@ -9,6 +8,7 @@ celery = Celery(
     backend=settings.REDIS_URL,
 )
 celery.conf.timezone = "UTC"
+celery.conf.broker_connection_retry_on_startup = True
 celery.conf.task_routes = {"app.workers.tasks.*": {"queue": "default"}}
 celery.conf.beat_schedule = {
     "auto-blog": {
@@ -44,4 +44,9 @@ celery.conf.beat_schedule = {
         "schedule": 86400,
     },
 }
+
+# Import task modules only after the Celery instance exists.  Importing
+# blog_tasks before this point creates a circular import during worker startup.
+import app.workers.blog_tasks  # noqa: E402,F401
+
 celery.autodiscover_tasks(["app.workers"])

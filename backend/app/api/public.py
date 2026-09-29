@@ -1,4 +1,5 @@
 """Javni endpointi bez auth — za Next.js SSR/SSG."""
+import html
 from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import desc, func
@@ -39,7 +40,20 @@ def search_jobs(
     else: q = q.order_by(desc(Job.posted_at if sort == "newest" else Job.scraped_at))
     jobs = q.offset(offset).limit(limit).all()
     facet_base = db.query(Job).filter(Job.is_active.is_(True))
-    facets = {"category": [{"value": x[0], "count": x[1]} for x in facet_base.with_entities(Job.category, func.count(Job.id)).filter(Job.category.isnot(None)).group_by(Job.category).order_by(desc(func.count(Job.id))).all()], "country": [{"value": x[0], "count": x[1]} for x in facet_base.with_entities(Job.country_code, func.count(Job.id)).filter(Job.country_code.isnot(None)).group_by(Job.country_code).order_by(desc(func.count(Job.id))).all()]}
+    def facet(column):
+        return [{"value": value, "count": count} for value, count in facet_base.with_entities(column, func.count(Job.id)).filter(column.isnot(None)).group_by(column).order_by(desc(func.count(Job.id))).all()]
+
+    city_rows = facet_base.with_entities(Job.country_code, Job.city, func.count(Job.id)).filter(Job.city.isnot(None)).group_by(Job.country_code, Job.city).order_by(desc(func.count(Job.id))).all()
+    facets = {
+        "category": facet(Job.category),
+        "country": facet(Job.country_code),
+        "city": facet(Job.city),
+        "city_by_country": [{"country": country, "value": city, "count": count} for country, city, count in city_rows],
+        "work_mode": facet(Job.work_mode),
+        "seniority": facet(Job.seniority),
+        "employment_type": facet(Job.employment_type),
+        "source": facet(Job.source),
+    }
     return {"total": total, "items": [_job_to_dict(j) for j in jobs], "facets": facets, "next_offset": offset + len(jobs) if offset + len(jobs) < total else None}
 
 
@@ -49,7 +63,8 @@ def _job_to_dict(j: Job) -> dict:
         "slug": j.slug,
         "title": j.title,
         "company": j.company,
-        "company_logo": j.company_logo,
+        "source": j.source,
+        "company_logo": getattr(j, "company_logo", None),
         "location": j.location,
         "city": j.city,
         "country_code": j.country_code,
@@ -65,7 +80,12 @@ def _job_to_dict(j: Job) -> dict:
         "salary_max": float(j.salary_max) if j.salary_max else None,
         "currency": j.currency,
         "salary_period": j.salary_period,
-        "description": bleach.clean(j.description or "", tags=["p", "br", "strong", "em", "ul", "ol", "li", "h2", "h3"], attributes={}, strip=True),
+        "description": bleach.clean(
+            html.unescape(j.description or ""),
+            tags=["div", "p", "br", "strong", "em", "b", "i", "ul", "ol", "li", "h2", "h3", "h4", "span"],
+            attributes={"span": ["class"], "div": ["class"], "li": ["style"]},
+            strip=True,
+        ),
         "url": j.url,
         "seo_title": j.seo_title,
         "seo_description": j.seo_description,
@@ -129,16 +149,6 @@ def jobs_by_country(country: str, limit: int = 12, db: Session = Depends(get_db)
     return {"items": [_job_to_dict(j) for j in jobs]}
 
 
-@router.get("/jobs/{slug}")
-def job_by_slug(slug: str, db: Session = Depends(get_db)):
-    job = db.query(Job).filter_by(slug=slug).first()
-    if not job:
-        raise HTTPException(404, "Job not found")
-    job.views = (job.views or 0) + 1
-    db.commit()
-    return _job_to_dict(job)
-
-
 @router.get("/jobs/by-id/{job_id}")
 def job_by_id(job_id: str, db: Session = Depends(get_db)):
     job = db.get(Job, job_id)
@@ -163,6 +173,18 @@ def jobs_sitemap(limit: int = 5000, db: Session = Depends(get_db)):
         }
         for j in jobs
     ]
+
+
+# Keep the dynamic slug route after all fixed paths above. Otherwise FastAPI
+# treats "/jobs/sitemap" as a slug and returns a misleading 404.
+@router.get("/jobs/{slug}")
+def job_by_slug(slug: str, db: Session = Depends(get_db)):
+    job = db.query(Job).filter_by(slug=slug).first()
+    if not job:
+        raise HTTPException(404, "Job not found")
+    job.views = (job.views or 0) + 1
+    db.commit()
+    return _job_to_dict(job)
 
 
 @router.get("/cities")
